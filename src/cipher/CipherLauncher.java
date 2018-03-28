@@ -6,6 +6,7 @@ import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 
 public class CipherLauncher {
 
@@ -25,10 +26,7 @@ public class CipherLauncher {
     }
 
     private String getOutputFileName() {
-        StringBuilder name = new StringBuilder();
-        int i = inputFileName.lastIndexOf('.');
-        return name.append(inputFileName.substring(0, i)).append("XORed")
-                .append(inputFileName.substring(i)).toString();
+        return inputFileName + ".xor";
     }
 
     private void launch(String[] args) {
@@ -47,10 +45,12 @@ public class CipherLauncher {
             outputFileName = getOutputFileName();
         }
 
+
         Cipher cipher = new Cipher(key);
+
         try {
             int result = cipher.crypt(inputFileName, outputFileName);
-            System.out.println("Total of " + result + " symbols XORed");
+            System.out.println("Total of " + result + " bytes XORed");
         } catch (IOException ex) {
             System.err.println(ex.getMessage());
         }
