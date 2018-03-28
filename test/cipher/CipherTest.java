@@ -11,7 +11,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class CipherTest {
 
     boolean contentEquals(String first, String second) throws IOException {
-        try (FileInputStream firstStream = new FileInputStream(first); FileInputStream secondStream = new FileInputStream(second)) {
+        try (FileInputStream firstStream = new FileInputStream(first);
+             FileInputStream secondStream = new FileInputStream(second)) {
             int byte1 = firstStream.read();
             int byte2 = secondStream.read();
             while ((byte1 != -1) && (byte2 != -1)) {
