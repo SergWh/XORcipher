@@ -6,12 +6,12 @@ import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
+import javax.xml.bind.DatatypeConverter;
 
 public class CipherLauncher {
 
 
-    @Option(name = "-c", required = true, aliases = "-d", metaVar = "Key", usage = "Key of cipher")
+    @Option(name = "-c", required = true, aliases = "-d", metaVar = "Key", usage = "Key of cipher in hexadecimal")
     private String key;
 
     @Argument(required = true, metaVar = "InputName", usage = "Input file name")
@@ -45,8 +45,19 @@ public class CipherLauncher {
             outputFileName = getOutputFileName();
         }
 
+        byte[] bytesKey;
 
-        Cipher cipher = new Cipher(key);
+        try {
+            bytesKey = DatatypeConverter.parseHexBinary(key);
+        } catch (IllegalArgumentException ex) {
+            System.err.println(ex.getMessage());
+            System.err.println("");
+            parser.printUsage(System.err);
+            return;
+        }
+
+        Cipher cipher = new Cipher(bytesKey);
+
 
         try {
             int result = cipher.crypt(inputFileName, outputFileName);
@@ -54,6 +65,7 @@ public class CipherLauncher {
         } catch (IOException ex) {
             System.err.println(ex.getMessage());
         }
+
 
     }
 }

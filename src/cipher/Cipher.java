@@ -14,6 +14,10 @@ public class Cipher {
         this.key = DatatypeConverter.parseHexBinary(key);
     }
 
+    public Cipher(byte[] key) {
+        this.key = key;
+    }
+
 
     public int crypt(String inputName, String outputName) throws IOException {
         try (FileInputStream inputStream = new FileInputStream(inputName)) {
