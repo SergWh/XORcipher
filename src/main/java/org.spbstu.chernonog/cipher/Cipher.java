@@ -1,8 +1,10 @@
-package cipher;
+package org.spbstu.chernonog.cipher;
 
 
 import javax.xml.bind.DatatypeConverter;
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 
 public class Cipher {

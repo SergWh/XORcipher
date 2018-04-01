@@ -1,15 +1,14 @@
-package cipher;
+package org.spbstu.chernonog.cipher;
 
 import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
 
-import java.io.IOException;
 import javax.xml.bind.DatatypeConverter;
+import java.io.IOException;
 
 public class CipherLauncher {
-
 
     @Option(name = "-c", required = true, aliases = "-d", metaVar = "Key", usage = "Key of cipher in hexadecimal")
     private String key;
