@@ -25,20 +25,24 @@ class CipherTest {
         }
     }
 
-    @Test
-    void encryptAndDecryptSameFile() throws IOException {
+    void encryptAndDecrypt(String original) throws IOException {
+        String encrypted = original + "Enc.xor";
+        String decrypted = original + "Dec.xor";
         Cipher cipher = new Cipher("FF");
+        cipher.crypt(original, encrypted);
+        cipher.crypt(encrypted, decrypted);
+        assertTrue(contentEquals(original, decrypted));
+        new File(encrypted).delete();
+        new File(decrypted).delete();
+    }
 
-        cipher.crypt("src/test/resources/hello.txt", "src/test/resources/helloEncrypted.xor");
-        cipher.crypt("src/test/resources/helloEncrypted.xor", "src/test/resources/helloDecrypted.xor");
-        assertTrue(contentEquals("src/test/resources/hello.txt", "src/test/resources/helloDecrypted.xor"));
-        new File("src/test/resources/helloEncrypted.xor").delete();
-        new File("src/test/resources/helloDecrypted.xor").delete();
+    @Test
+    void encryptAndDecryptPicture() throws IOException {
+        encryptAndDecrypt("src/test/resources/picExample.jpg");
+    }
 
-        cipher.crypt("src/test/resources/picExample.jpg", "src/test/resources/picEncrypted.xor");
-        cipher.crypt("src/test/resources/picEncrypted.xor", "src/test/resources/picDecrypted.xor");
-        assertTrue(contentEquals("src/test/resources/picExample.jpg", "src/test/resources/picDecrypted.xor"));
-        new File("src/test/resources/picEncrypted.xor").delete();
-        new File("src/test/resources/picDecrypted.xor").delete();
+    @Test
+    void encryptAndDecryptTxt() throws IOException {
+        encryptAndDecrypt("src/test/resources/hello.txt");
     }
 }
